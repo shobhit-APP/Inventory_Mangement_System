@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile - Modern</title>
+      <link href="/static/css/UpdateUser.css" rel="stylesheet"/>
+        <!-- Add Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<!-- Custom Alert Modal -->
+<div id="customAlert" class="custom-modal hidden">
+    <div class="custom-modal-content">
+        <h2 id="alertTitle">Update Admin Details</h2>
+        <p id="alertMessage">Are you sure you want to Update Your Details</p>
+        <div class="modal-actions">
+            <button id="confirmBtn" class="confirm-btn">Yes, Update My Details!</button>
+            <button id="cancelBtn" class="cancel-btn">Cancel</button>
+        </div>
+    </div>
+</div>
+<button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+    <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+    >
+        <circle cx="12" cy="12" r="5" />
+        <path
+                d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+        />
+    </svg>
+</button>
+<div class="container">
+    <a href="/app/Setting" class="back-button">
+        ← Back To Setting
+    </a>
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2>Update Admin Details</h2>
+        </div>
+        <form onsubmit="handleSubmit(event)" id="update_form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input
+                            type="text"
+                            name="firstName"
+                            th:value="${FirstName}"
+                            class="form-input"
+                            id="firstName"
+                            title="First Name"
+                            placeholder="Enter your first name"
+                    />
+                    <div id="firstNameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input
+                            type="text"
+                            name="lastName"
+                            th:value="${LastName}"
+                            class="form-input"
+                            id="lastName"
+                            title="Last Name"
+                            placeholder="Enter your last name"
+                    />
+                    <div id="lastNameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input
+                            type="email"
+                            name="emailAddress"
+                            th:value="${EmailAddress}"
+                            class="form-input"
+                            id="email"
+                            title="Email"
+                            placeholder="Enter your email"
+                    />
+                    <div id="emailError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input
+                            type="tel"
+                            name="contactNo"
+                            th:value="${ContactNo}"
+                            class="form-input"
+                            id="contactNo"
+                            title="Phone"
+                            placeholder="Enter your phone number"
+                    />
+                    <div id="phoneError" class="error"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Bio</label>
+                <textarea
+                        name="Bio"
+                        rows="4"
+                        th:text="${Bio}"
+                        class="form-textarea"
+                        id="Bio"
+                        title="Bio"
+                        placeholder="Tell us about yourself"
+                ></textarea>
+                <div id="bioError" class="error"></div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Country</label>
+                    <select name="country" class="form-select" id="Country" title="Country">
+                        <option value="">Select Country</option>
+                            <option value="India" th:selected="${Country =='India'}">India</option>
+                            <option value="US" th:selected="${Country =='US'}">United States</option>
+                            <option value="UK" th:selected="${Country =='UK'}">United Kingdom</option>
+                            <option value="CA" th:selected="${Country =='CA'}">Canada</option>
+                            <option value="Australia" th:selected="${Country == 'Australia'}">Australia</option>
+                            <option value="Germany" th:selected="${Country == 'Germany'}">Germany</option>
+                            <option value="France" th:selected="${Country == 'France'}">France</option>
+                            <option value="Japan" th:selected="${Country == 'Japan'}">Japan</option>
+                            <option value="China" th:selected="${Country == 'China'}">China</option>
+                            <option value="Brazil" th:selected="${Country == 'Brazil'}">Brazil</option>
+                            <option value="SouthAfrica" th:selected="${Country == 'SouthAfrica'}">South Africa</option>
+                            <option value="Russia" th:selected="${Country == 'Russia'}">Russia</option>
+                            <option value="Mexico" th:selected="${Country == 'Mexico'}">Mexico</option>
+                            <option value="Italy" th:selected="${Country == 'Italy'}">Italy</option>
+                            <option value="Spain" th:selected="${Country == 'Spain'}">Spain</option>
+                            <option value="Netherlands" th:selected="${Country == 'Netherlands'}">Netherlands</option>
+                            <option value="Switzerland" th:selected="${Country == 'Switzerland'}">Switzerland</option>
+                            <option value="SouthKorea" th:selected="${Country == 'SouthKorea'}">South Korea</option>
+                            <option value="Sweden" th:selected="${Country == 'Sweden'}">Sweden</option>
+                            <option value="NewZealand" th:selected="${Country == 'NewZealand'}">New Zealand</option>
+                    </select>
+                    <div id="countryError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">State</label>
+                    <select name="state" class="form-select" id="state" title="State">
+                        <option value="">Select State</option>
+                            <option value="UttarPradesh" th:selected="${state == 'UttarPradesh'}">UttarPradesh</option>
+                            <option value="MadhyaPradesh" th:selected="${state == 'MadhyaPradesh'}">MadhyaPradesh</option>
+                            <option value="Maharashtra" th:selected="${state == 'Maharashtra'}">Maharashtra</option>
+                            <option value="TamilNadu" th:selected="${state == 'TamilNadu'}">Tamil Nadu</option>
+                            <option value="Karnataka" th:selected="${state == 'Karnataka'}">Karnataka</option>
+                            <option value="Gujarat" th:selected="${state == 'Gujarat'}">Gujarat</option>
+                            <option value="Rajasthan" th:selected="${state == 'Rajasthan'}">Rajasthan</option>
+                            <option value="WestBengal" th:selected="${state == 'WestBengal'}">West Bengal</option>
+                            <option value="Bihar" th:selected="${state == 'Bihar'}">Bihar</option>
+                            <option value="Punjab" th:selected="${state == 'Punjab'}">Punjab</option>
+                            <option value="Haryana" th:selected="${state == 'Haryana'}">Haryana</option>
+                            <option value="Kerala" th:selected="${state == 'Kerala'}">Kerala</option>
+                            <option value="Odisha" th:selected="${state == 'Odisha'}">Odisha</option>
+                            <option value="Assam" th:selected="${state == 'Assam'}">Assam</option>
+                            <option value="Jharkhand" th:selected="${state == 'Jharkhand'}">Jharkhand</option>
+                            <option value="Chhattisgarh" th:selected="${state == 'Chhattisgarh'}">Chhattisgarh</option>
+                            <option value="Uttarakhand" th:selected="${state == 'Uttarakhand'}">Uttarakhand</option>
+                            <option value="HimachalPradesh" th:selected="${state == 'HimachalPradesh'}">Himachal Pradesh</option>
+                            <option value="Goa" th:selected="${state == 'Goa'}">Goa</option>
+                            <option value="Tripura" th:selected="${state == 'Tripura'}">Tripura</option>
+                            <option value="Meghalaya" th:selected="${state == 'Meghalaya'}">Meghalaya</option>
+                            <option value="Manipur" th:selected="${state == 'Manipur'}">Manipur</option>
+                            <option value="Nagaland" th:selected="${state == 'Nagaland'}">Nagaland</option>
+                            <option value="ArunachalPradesh" th:selected="${state == 'ArunachalPradesh'}">Arunachal Pradesh</option>
+                            <option value="Mizoram" th:selected="${state == 'Mizoram'}">Mizoram</option>
+                            <option value="Sikkim" th:selected="${state == 'Sikkim'}">Sikkim</option>
+                            <option value="Telangana" th:selected="${state == 'Telangana'}">Telangana</option>
+                            <option value="AndhraPradesh" th:selected="${state == 'AndhraPradesh'}">Andhra Pradesh</option>
+                        </select>
+                    <div id="stateError" class="error"></div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input
+                            type="text"
+                            name="company"
+                            th:value="${company}"
+                            class="form-input"
+                            id="company"
+                            title="Company Name"
+                            placeholder="Enter your Company name"
+                    />
+                    <div id="companyError" class="error"></div>
+                    </div>
+                <div class="form-group">
+                    <label for="usertype"  class="form-label">Usertype</label>
+                    <select
+                            name="Usertype"
+                            class="form-select"
+                            id="usertype"
+                            title="Usertype"
+                    >
+                        <option value="" > Select UserType</option>
+                        <option value="Individual" th:selected="${UserType == 'Individual'}">Individual</option>
+                        <option value="Business" th:selected="${UserType == 'Business'}">Business</option>
+                        </select>
+                       <div id="userTypeError" class="error"></div>
+                </div>
+                </div>
+            <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">Password<span id="toggleIcon" onclick="togglePassword()">🙈</span></label>
+                <input type="password" name="password" class="form-input" id="password"  title="Password" placeholder="Enter your password" />
+                <div id="passwordError" class="error"></div>
+            </div>
+            <div class="form-group">
+
+                <label class="form-label">Confirm Password
+                    <span id="toggleIcon2" onclick="togglePassword()">🙈</span></label>
+
+                <input type="password" name="confirmPassword" class="form-input" id="confirmPassword"  title="Confirm Password" placeholder="Confirm your password" />
+                <div id="confirmPasswordError" class="error"></div>
+            </div>
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+
+        <div class="message success-message" id="successMessage">
+            <div class="message-content">
+                <span class="icon">✓</span>
+                Admin details updated successfully
+            </div>
+            <span class="close-btn">&times;</span>
+        </div>
+        <div class="message error-message" id="errorMessage">
+            <div class="message-content">
+                <span class="icon">!</span>
+                Failed to update admin details
+            </div>
+            <span class="close-btn">&times;</span>
+        </div>
+        </div>
+</div>
+<!--Loading Overlay-->
+<div class="loading" id="loadingOverlay">Loading... ⏳</div>
+<script src="/static/javascript/Updateuser.js"></script>
+</body>
+</html>

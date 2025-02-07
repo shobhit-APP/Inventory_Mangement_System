@@ -1,2 +1,15 @@
-package com.example.StockStick.Controller;public class Home {
+package com.example.StockStick.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/Stock-Stick")
+public class Home {
+    @GetMapping({""})
+    public String app()
+    {
+        return "StockStick";
+    }
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - StockStick</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/css/ContactUs.css" rel="stylesheet"/>
+  </head>
+  <body class="bg-gray-100 light-mode">
+    <!-- Top Navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><strong>StockStick</strong></a>
+        <button id="theme-toggle" class="btn btn-secondary ms-3">🌞</button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/app/StockStick.com">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/app/Pricing">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/app/AboutUs">About</a>
+            </li>
+          </ul>
+<!--          <button id="theme-toggle" class="btn btn-secondary ms-3">🌞</button>-->
+        </div>
+      </div>
+    </nav>
+    <!-- Contact Us Form -->
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card form-card shadow p-4 bg-white rounded">
+            <h2 class="mb-4 text-center">Contact Us</h2>
+            <form action="/app/ContactUs" method="post">
+              <div class="mb-3">
+                <label for="username" class="form-label">Name</label>
+                <input type="text" class="form-control" id="username" name="username" required />
+              </div>
+              <div class="mb-3">
+                <label for="emailAddress" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="emailAddress" name="emailAddress" required />
+              </div>
+              <div class="mb-3">
+                <label for="messages" class="form-label">Message</label>
+                <textarea class="form-control" id="messages" name="messages" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-white shadow mt-5">
+      <div class="container py-4 text-center">
+        <p class="text-gray-600">
+          &copy; 2023 StockStick. All rights reserved.
+        </p>
+        <nav class="flex justify-center space-x-4 mt-2">
+          <a href="/app/terms_Policy" class="text-gray-600 hover:text-gray-800"
+            >Terms & Policy Privacy </a
+          >
+          <a href="/app/ContactUs" class="text-gray-600 hover:text-gray-800"
+            >Contact Us</a
+          >
+        </nav>
+      </div>
+    </footer>
+    <!-- Bootstrap and JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Theme Toggle Script -->
+    <script src="/static/javascript/Contact.js"></script>
+  </body>
+</html>

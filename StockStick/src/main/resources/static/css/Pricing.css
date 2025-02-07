@@ -1,0 +1,118 @@
+
+        /* General Styles */
+        body {
+          background-color: #f3f4f6;
+          color: #333;
+          transition: background-color 0.5s, color 0.5s;
+        }
+        header,
+        footer {
+          background-color: #ffffff;
+          color: #333;
+          padding: 20px;
+          transition: background-color 0.5s, color 0.5s;
+        }
+        .navbar-nav a {
+          color: inherit;
+          text-decoration: none;
+        }
+        .navbar-nav a:hover {
+          color: #3182ce;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 40px;
+          padding-top: 50px;
+          flex-wrap: wrap;
+        }
+
+        /* Pricing Card Styles */
+        .pricing-card {
+          width: 400px; /* Increased card size */
+          border-radius: 15px;
+          padding: 40px;
+          text-align: center;
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+          transform: scale(0.95);
+          transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .pricing-card:hover {
+          transform: scale(1.1);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Plan Colors */
+        .card-basic {
+          background-color: #fff;
+        }
+        .card-advanced {
+          background: linear-gradient(135deg, #2b6cb0, #3182ce);
+          color: #ffffff;
+        }
+        .card-enterprise {
+          background-color: #fff;
+        }
+
+        /* Price Text */
+        .price {
+          font-size: 3em;
+          font-weight: bold;
+        }
+
+        /* Call-to-Action Button */
+        .cta-btn {
+          background-color: #3182ce;
+          color: #ffffff;
+          margin-top: 20px;
+          border: none;
+          border-radius: 5px;
+          padding: 10px 20px;
+          font-weight: bold;
+        }
+        .cta-btn:hover {
+          background-color: #2b6cb0;
+        }
+
+        /* Animation */
+        .pricing-card {
+          opacity: 0;
+          animation: fadeInUp 1s forwards;
+        }
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+          background-color: #1a202c;
+          color: #e2e8f0;
+        }
+        .dark-mode header,
+        .dark-mode footer {
+          background-color: #2d3748;
+          color: #e2e8f0;
+        }
+        .dark-mode .navbar-nav a {
+          color: #e2e8f0;
+        }
+        .dark-mode .pricing-card.card-basic,
+        .dark-mode .pricing-card.card-enterprise {
+          background-color: #2d3748;
+          color: #e2e8f0;
+        }
+
+        /* Footer Margin */
+        footer {
+          margin-top: 40px;
+        }

@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - StockStick</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          screens: {
+            xs: "375px",
+          },
+        },
+      },
+    };
+  </script>
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link
+          rel="stylesheet"
+          href="/static/css/Setting.css"
+  />
+</head>
+<body
+        class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col"
+>
+<div id="customAlert" class="custom-modal hidden">
+  <div class="custom-modal-content">
+    <h2 id="alertTitle" class="text-xl font-bold mb-4">Adding New Item</h2>
+    <p id="alertMessage" class="mb-2">Are you sure you want to Log Out?</p>
+    <p id="alertMessage1" class="mb-4">
+      Are you sure you want to Delete Your Account?
+    </p>
+    <div class="modal-actions">
+      <button id="confirmBtn" class="confirm-btn">Yes, Confirm!</button>
+      <button id="cancelBtn" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-10">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+            <span
+                    class="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400"
+            >StockStick</span
+            >
+        <a
+                href="/app/StockStick.com"
+                class="hidden sm:block ml-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium"
+        >Home</a
+        >
+      </div>
+      <div class="flex items-center">
+        <button
+                id="theme-toggle"
+                class="bg-blue-500 dark:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600 dark:hover:bg-blue-800 transition-colors"
+        >
+          Toggle Theme
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="flex-grow">
+  <div class="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+    <h1
+            class="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-gray-800 dark:text-gray-200"
+    >
+      Settings
+    </h1>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <div
+              class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-4 sm:p-6"
+      >
+        <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200"
+        >
+          Profile Information
+        </h2>
+        <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          <img
+                  src="https://via.placeholder.com/150"
+                  alt="Profile"
+                  class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-blue-500"
+          />
+          <div class="text-center sm:text-left">
+            <div
+                    class="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300"
+            >
+              <strong>Name:</strong>
+              <p th:text="${firstNameLastName}"></p>
+            </div>
+            <div
+                    class="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300"
+            >
+              <strong>Email:</strong>
+              <p th:text="${emailAddress}"></p>
+            </div>
+            <div
+                    class="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300"
+            >
+              <strong>Contact:</strong>
+              <p th:text="${ContactNo}"></p>
+            </div>
+          </div>
+        </div>
+        <a href="/app/UpdateUser"><button
+                class="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+        >
+          Edit Profile
+        </button>
+        </a>
+      </div>
+
+      <div
+              class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-4 sm:p-6"
+      >
+        <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200"
+        >
+          Current Subscription
+        </h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
+            <thead
+                    class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+            >
+            <tr>
+              <th class="px-3 sm:px-4 py-3">Attribute</th>
+              <th class="px-3 sm:px-4 py-3">Details</th>
+            </tr>
+            </thead>
+            <tbody
+                    class="divide-y divide-gray-200 dark:divide-gray-700"
+                    th:each="UserPlans: ${UserPlans}"
+            >
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-3 sm:px-4 py-3 font-medium">Current Plan</td>
+              <td
+                      class="px-3 sm:px-4 py-3"
+                      th:text="${UserPlans.planType}"
+              ></td>
+            </tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-3 sm:px-4 py-3 font-medium">Start Date</td>
+              <td
+                      class="px-3 sm:px-4 py-3"
+                      th:text="${UserPlans.selectedDate}"
+              ></td>
+            </tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-3 sm:px-4 py-3 font-medium">End Date</td>
+              <td
+                      class="px-3 sm:px-4 py-3"
+                      th:text="${UserPlans.expiryDate}"
+              ></td>
+            </tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-3 sm:px-4 py-3 font-medium">Plan ID</td>
+              <td
+                      class="px-3 sm:px-4 py-3"
+                      th:text="${UserPlans.planId}"
+              ></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+            class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-4 sm:p-6 mt-6"
+    >
+      <h2
+              class="text-xl font-semibold mb-4 text-gray-1000 dark:text-gray-500"
+      >
+        About
+      </h2>
+      <p th:text="${Bio}" class="mb-4"></p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <h1 class="font-bold">Company:</h1>
+          <p th:text="${company}"></p>
+        </div>
+        <div>
+          <h1 class="font-bold">Country:</h1>
+          <p th:text="${country}"></p>
+        </div>
+        <div>
+          <h1 class="font-bold">State:</h1>
+          <p th:text="${state}"></p>
+        </div>
+        <div>
+          <h1 class="font-bold">UserType:</h1>
+          <p th:text="${UserType}"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+      <button
+              onclick="handleLogout()"
+              class="w-full sm:w-auto bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors"
+      >
+        Logout
+      </button>
+      <button
+              class="w-full sm:w-auto bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition-colors"
+              th:onclick="|deleteItem(${UserId})|"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-white dark:bg-gray-800 shadow-md mt-8">
+  <div class="max-w-7xl mx-auto py-4 px-4 text-center">
+    <p class="text-gray-500 dark:text-gray-400">
+      &copy; 2024 StockStick. All rights reserved.
+    </p>
+  </div>
+</footer>
+<script src="/static/javascript/Setting.js"></script>
+</body>
+</html>
