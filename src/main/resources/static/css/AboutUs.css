@@ -1,0 +1,69 @@
+ /* Animations */
+        .fade-in {
+            animation: fadeIn 2s ease-in forwards;
+        }
+        .slide-in-left {
+            animation: slideInLeft 1s ease forwards;
+        }
+        .slide-in-right {
+            animation: slideInRight 1s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        /* Light mode styles */
+        .light-mode {
+            --bg-color: #f3f4f6;
+            --text-color: #374151;
+            --header-footer-bg: #ffffff;
+            --button-bg: #e5e7eb;
+            --button-hover: #d1d5db;
+        }
+        /* Dark mode styles */
+        .dark-mode {
+            --bg-color: #1f2937;
+            --text-color: #d1d5db;
+            --header-footer-bg: #111827;
+            --button-bg: #374151;
+            --button-hover: #4b5563;
+        }
+        /* Applying theme colors */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header, footer {
+            background-color: var(--header-footer-bg);
+        }
+        #theme-toggle {
+            background-color: var(--button-bg);
+        }
+        #theme-toggle:hover {
+            background-color: var(--button-hover);
+        }
+        /* Book-style design */
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--header-footer-bg);
+            border: 2px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .main-content h1 {
+            font-family: 'Georgia', serif;
+        }
+        .main-content p {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+        }
