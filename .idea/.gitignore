@@ -3,4 +3,5 @@
 /workspace.xml
 HELP.md
 README.md
-.idea/
+/.idea
+/.mvn
