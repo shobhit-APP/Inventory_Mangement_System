@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing - StockStick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link href="/static/css/UserPlan.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100">
+<!-- Header (Unchanged) -->
+<header
+        class="bg-gradient-to-r from-purple-500 via-blue-500 to-red-500 shadow"
+>
+    <nav
+            class="container mx-auto px-6 py-4 flex items-center justify-between"
+    >
+        <a class="text-3xl font-bold text-white" href="#">StockStick</a>
+        <div class="lg:hidden">
+            <button
+                    class="text-white"
+                    type="button"
+                    onclick="toggleNavbar()"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"
+                    ></path>
+                </svg>
+            </button>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+            <a
+                    class="text-white hover:text-gray-200 transition-colors duration-300"
+                    href="/app/StockStick"
+            >Home</a
+            >
+            <a
+                    class="text-white hover:text-gray-200 transition-colors duration-300"
+                    href="/app/ContactUs"
+            >Contact Us</a
+            >
+            <a
+                    class="text-white hover:text-gray-200 transition-colors duration-300"
+                    href="/app/terms_Policy"
+            >Terms</a
+            >
+        </div>
+    </nav>
+    <div class="hidden lg:hidden bg-white shadow-md" id="navbarNav">
+        <ul class="mt-4 pb-4">
+            <li>
+                <a
+                        class="block text-gray-800 hover:text-blue-600 py-2 px-4 transition-colors duration-300"
+                        href="/app/StockStick"
+                >Home</a
+                >
+            </li>
+            <li>
+                <a
+                        class="block text-gray-800 hover:text-blue-600 py-2 px-4 transition-colors duration-300"
+                        href="/app/ContactUs"
+                >Contact Us</a
+                >
+            </li>
+            <li>
+                <a
+                        class="block text-gray-800 hover:text-blue-600 py-2 px-4 transition-colors duration-300"
+                        href="/app/terms_Policy"
+                >Terms</a
+                >
+            </li>
+        </ul>
+    </div>
+</header>
+<!-- Main Content -->
+<div class="container">
+    <!-- User ID Input -->
+
+    <div class="text-center" style="margin-top: 20px">
+        <input type="hidden" id="sessionUserId" th:value="${userId}" />
+        <label for="enteredUserId" class="text-lg font-medium text-gray-800">
+            Please enter your User ID (sent to your Registered Email Address) and
+            then select a plan:
+        </label>
+        <div class="d-flex justify-content-center gap-2">
+            <input
+                    type="text"
+                    id="enteredUserId"
+                    class="form-control"
+                    style="max-width: 300px"
+                    placeholder="Your User ID"
+            />
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="validateUserId()"
+            >
+                Submit
+            </button>
+        </div>
+    </div>
+
+    <div class="Container mx-auto px-4 py-8">
+        <div class="text-center mb-6">
+            <p class="heading">Choose Your Perfect Plan</p>
+            <p class="subheading">
+                Flexible solutions for businesses of all sizes
+            </p>
+        </div>
+    </div>
+
+    <form action="/app/UserPlan" method="post" id="userPlanForm">
+        <input type="hidden" name="userId" id="userIdHidden" />
+        <input type="hidden" name="planId" id="planIdHidden" />
+        <input type="hidden" name="planType" id="planTypeHidden" />
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Basic Plan -->
+            <div
+                    class="plan-card bg-white rounded-2xl shadow-lg p-8 text-center border-2 border-transparent hover:border-blue-500"
+            >
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">
+                        BASIC PLAN
+                    </h3>
+                    <p class="text-5xl font-bold text-blue-600 mb-4">₹299</p>
+                    <p class="text-gray-600 text-lg">Per Month</p>
+                </div>
+                <p class="text-gray-700 mb-6 h-20">
+                    Ideal for small businesses, includes inventory tracking and basic
+                    reporting features.
+                </p>
+                <ul class="space-y-4 mb-8 text-gray-700">
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Stock level tracking</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Low-stock alerts</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Basic reporting</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Email support</span>
+                    </li>
+                </ul>
+                <button
+                        type="button"
+                        onclick="selectPlan('BasicPlan')"
+                        class="w-full bg-blue-50 text-blue-600 py-3 rounded-lg hover:bg-blue-100 transition duration-300 font-semibold"
+                >
+                    Select Basic Plan
+                </button>
+            </div>
+
+            <!-- Advanced Plan -->
+            <div
+                    class="plan-card relative z-10 transform scale-105 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-2xl p-8 text-center"
+            >
+                <div
+                        class="absolute top-0 right-0 m-4 bg-yellow-400 text-blue-900 px-3 py-1 rounded-full text-sm font-bold"
+                >
+                    MOST POPULAR
+                </div>
+                <div class="mb-6 text-white">
+                    <h3 class="text-2xl font-semibold mb-3">ADVANCED PLAN</h3>
+                    <p class="text-5xl font-bold mb-4">₹599</p>
+                    <p class="text-lg">Per Month</p>
+                </div>
+                <p class="text-white mb-6 h-20">
+                    For growing businesses, includes advanced analytics and
+                    integration options.
+                </p>
+                <ul class="space-y-4 mb-8 text-white">
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-white mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Multi-location support</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-white mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Advanced analytics</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-white mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Supplier management</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-white mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>API integrations</span>
+                    </li>
+                </ul>
+                <button
+                        type="button"
+                        onclick="selectPlan('AdvancePlan')"
+                        class="w-full bg-white text-blue-600 py-3 rounded-lg hover:bg-gray-100 transition duration-300 font-semibold"
+                >
+                    Select Advanced Plan
+                </button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div
+                    class="plan-card bg-white rounded-2xl shadow-lg p-8 text-center border-2 border-transparent hover:border-blue-500"
+            >
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-3">
+                        ENTERPRISE PLAN
+                    </h3>
+                    <p class="text-5xl font-bold text-blue-600 mb-4">₹999</p>
+                    <p class="text-gray-600 text-lg">Per Month</p>
+                </div>
+                <p class="text-gray-700 mb-6 h-20">
+                    Comprehensive solution for large enterprises with custom features
+                    and full support.
+                </p>
+                <ul class="space-y-4 mb-8 text-gray-700">
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Unlimited stock tracking</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Custom integrations</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Dedicated account manager</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg
+                                class="w-6 h-6 text-blue-500 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                        <span>Priority support</span>
+                    </li>
+                </ul>
+                <button
+                        type="button"
+                        onclick="selectPlan('EnterPrisePlan')"
+                        class="w-full bg-blue-50 text-blue-600 py-3 rounded-lg hover:bg-blue-100 transition duration-300 font-semibold"
+                >
+                    Select Enterprise Plan
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <button
+                    type="submit"
+                    class="bg-blue-600 text-white px-10 py-4 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-semibold shadow-lg hover:shadow-xl"
+            >
+                Confirm Your Plan
+            </button>
+        </div>
+    </form>
+</div>
+<!-- Custom Alert Modal -->
+<div id="customAlertModal">
+    <div class="alert-modal-content">
+        <div class="alert-modal-header">
+            <h3 id="alertModalTitle">Notification</h3>
+            <button class="alert-modal-close" onclick="closeCustomAlert()">
+                &times;
+            </button>
+        </div>
+        <div id="alertModalIcon" class="alert-modal-icon">
+            <!-- Icon will be dynamically inserted -->
+        </div>
+        <div id="alertModalMessage" class="alert-modal-message"></div>
+        <div class="alert-modal-actions">
+            <button
+                    id="alertModalConfirmBtn"
+                    class="btn btn-primary"
+                    onclick="closeCustomAlert()"
+            >
+                Confirm
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer (Unchanged) -->
+<footer>
+    <!-- ... (same as previous version) ... -->
+    <p>&copy; 2024 StockStick | All rights reserved</p>
+    <div class="footer-links">
+        <a href="/app/ContactUs">Contact Us</a> |
+        <a href="/app/terms_Policy">Terms & Privacy</a> |
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/javascript/UserPlan.js">
+</script>
+</body>
+</html>

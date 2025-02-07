@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Product</title>
+
+    <link rel="stylesheet" href="/static/css/UpdateItem.css">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+<!-- Custom Alert Modal -->
+<div id="customAlert" class="custom-modal hidden">
+    <div class="custom-modal-content">
+        <h2 id="alertTitle">Update The Item</h2>
+        <p id="alertMessage">Are you sure you want to Update this item?</p>
+        <div class="modal-actions">
+            <button id="confirmBtn" class="confirm-btn">Yes, Update This Item!</button>
+            <button id="cancelBtn" class="cancel-btn">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <a href="/app/Inventory" class="back-button" onclick="goBack()">
+        ← Back to Inventory
+    </a>
+
+    <div class="card">
+        <div class="card-header">
+            <span>📝</span>
+            <h1>Update Product</h1>
+        </div>
+
+        <div class="card-content">
+            <div class="character"></div>
+
+            <div class="product-info">
+                <p>
+                    <strong>Product ID:</strong>
+                    <span id="productId">Loading...</span>
+                </p>
+                <p>
+                    <strong>Last Updated:</strong>
+                    <span id="lastUpdated" th:name="item_lastUpdate" th:text="${items.item_lastUpdate}"></span>
+                </p>
+            </div>
+
+            <form id="updateForm">
+                <div class="form-group">
+                    <label for="name">Item Name</label>
+                    <input type="text" id="name" name="item_name" th:value="${items.item_name}" required />
+                    <div class="error" id="nameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="item_categories">Item Category:</label>
+                    <select id="item_categories" name="item_categories" required>
+                        <option value="">Select Your Option</option>
+                        <option value="electronics" th:selected="${items.item_categories == 'electronics'}">Electronics</option>
+                        <option value="clothing" th:selected="${items.item_categories == 'clothing'}">Clothing</option>
+                        <option value="food" th:selected="${items.item_categories == 'food'}">Food</option>
+                        <option value="other" th:selected="${items.item_categories == 'other'}">Other</option>
+                    </select>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="item_price">Item Price:</label>
+                        <input type="text" id="item_price" name="item_price" th:value="${items.item_price}" required />
+                        <div class="error" id="priceError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" th:value="${items.quantity}" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" id="status" name="status" th:value="${items.status}" required />
+                </div>
+                <div class="form-group">
+                    <label for="item_description">Item Description:</label>
+                    <textarea id="item_description" name="item_description" rows="3" th:text="${items.item_description}" required></textarea>
+                </div>
+                <button type="submit">💾 Update Item </button>
+            </form>
+
+            <div class="success-message" id="successMessage">Item successfully updated In the inventory!</div>
+            <div class="error-message" id="errorMessage">An error occurred. Please try again.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading" id="loadingOverlay">Loading... ⏳</div>
+
+<script src="/static/javascript/UpdateItem.js"> </script>
+
+</body>
+</html>

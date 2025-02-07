@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockStick Dashboard</title>
+    <script
+            src="https://kit.fontawesome.com/a076d05399.js"
+            crossorigin="anonymous"
+    ></script>
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+    <link href="/static/css/Inventory.css"  rel="stylesheet"/>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 JS -->
+</head>
+<body class="bg-gray-50" id="stockstick-body">
+<!-- Side Navigation -->
+<div class="side-nav bg-white dark:bg-gray-800 shadow-lg" id="sideNav">
+    <div class="p-4 flex items-center justify-between">
+        <div class="circle-crop">
+            <img src="/static/image/websitelogo.png" alt="LogoImage" class="logo-icon" />
+            <span class="text-2xl font-bold text-indigo-600 logo-text"
+            >StockStick</span
+            >
+        </div>
+        <button id="toggleNav"  aria-label="Toggle Nav">
+            <i class="fas fa-columns"></i>
+        </button>
+    </div>
+    <div class="nav-items space-y-2">
+        <!-- Home Navigation Item -->
+        <a
+                href="/app/StockStick.com"
+                class="nav-item text-gray-600 dark:text-gray-300"
+        >
+            <i class="fas fa-home"></i>
+            <span class="nav-text">Home</span>
+        </a>
+
+        <!-- Inventory Overview Navigation Item -->
+        <a
+                href="/app/Inventory"
+                class="nav-item text-gray-600 text-sm bg-indigo-50 dark:text-gray-300"
+        >
+            <i class="fas fa-box"></i>
+            <span class="nav-text">Inventory Overview</span>
+        </a>
+
+        <!-- Reports Navigation Item -->
+        <a
+                href="/app/Reports"
+                class="nav-item text-gray-600 dark:text-gray-300"
+        >
+            <i class="fas fa-file-alt"></i>
+            <span class="nav-text">Reports</span>
+        </a>
+    </div>
+</div>
+
+<!-- Top Navigation -->
+<nav class="bg-white dark:bg-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <button
+                        id="mobileSideNavToggle"
+                        class="lg:hidden mr-4"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button
+                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        <i class="fas fa-bell text-gray-600 dark:text-gray-300"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+                <button
+                        id="darkModeToggle"
+                        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                        aria-label="Toggle dark mode"
+                >
+                    <i class="fas fa-moon text-gray-600 dark:text-gray-300"></i>
+                </button>
+
+                <!-- Add this inside the top navigation bar, replace the existing profile button -->
+                <div class="relative" id="profileContainer">
+                    <button
+                            id="profileToggle"
+                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                            aria-label="Toggle profile menu"
+                    >
+                        <i class="fas fa-user text-gray-600 dark:text-gray-300"></i>
+                    </button>
+
+                    <!-- Profile Card -->
+                    <div class="profile-card" id="profileCard">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3
+                                    class="text-lg font-semibold"
+                                    th:text="${firstNameLastName}"
+                            ></h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Administrator
+                            </p>
+                            <div class="flex items-center justify-center mt-2">
+                                <span class="status-text">Online</span>
+                                <span class="status-indicator"></span>
+                            </div>
+                        </div>
+
+                        <div class="profile-info">
+                            <div
+                                    class="text-sm text-gray-500 dark:text-gray-400 space-y-2"
+                            >
+                                <p>
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    <span th:text="${emailAddress}"></span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-phone mr-2"></i>
+                                    <span th:text="${ContactNo}"></span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-globe mr-2"></i>
+                                    <span th:text="${country}"></span>
+                                </p>
+                                <p><span th:text="${state}"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-links space-y-1">
+                            <a href="/app/Setting" class="profile-link">
+                                <i class="fas fa-user-circle"></i>
+                                <span>View Profile Setting</span>
+                            </a>
+                            <a href="/app/ContactUs" class="profile-link">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Help & Support</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+    <div class="dashboard-container">
+        <!-- Stats Cards -->
+        <!-- [Your existing stats cards code...] -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="stats-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Items</p>
+                        <h3
+                                class="text-2xl font-bold text-gray-800"
+                                th:text="${TotalItem}"
+                        ></h3>
+                        <p class="text-green-500 text-sm">
+                            <i class="fas fa-arrow-up"></i> 12% increase
+                        </p>
+                    </div>
+                    <div class="card-icon bg-indigo-500">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome Back User Card -->
+            <div class="stats-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm" th:text="${greet}"></p>
+                        <h3 class="text-2xl font-bold text-gray-800">User</h3>
+                        <p class="text-green-500 text-sm">
+                            <i class="fas fa-smile"></i> <span th:text="${status2}"></span>
+                        </p>
+                        <p th:text="${Status}" class="text-gray-800 text-cente"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Categories</p>
+                        <h3
+                                class="text-2xl font-bold text-gray-800"
+                                th:text="${TotalCategories}"
+                        ></h3>
+                        <p class="text-blue-500 text-sm">
+                            <i class="fas fa-plus"></i> 2 new
+                        </p>
+                    </div>
+                    <div class="card-icon bg-blue-500">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Value In</p>
+                        <i class="fas fa-rupee-sign"></i>
+                        <h3
+                                class="text-2xl font-bold text-gray-800"
+                                th:text="${TotalPrice}"
+                        ></h3>
+                        <p class="text-green-500 text-sm">
+                            <i class="fas fa-arrow-up"></i> 8% increase
+                        </p>
+                    </div>
+                    <div class="card-icon bg-green-500">
+                        <span>&#8377;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <div class="chart-container">
+                <h2 class="text-xl font-bold mb-4">Stock Levels by Category</h2>
+                <canvas id="stockLevelsBarChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2 class="text-xl font-bold mb-4">Inventory Distribution</h2>
+                <canvas id="stockstick-inventory-chart"></canvas>
+            </div>
+        </div>
+        <!-- Table Section -->
+        <div class="table-container mt-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">Inventory List</h2>
+                <div class="flex space-x-4">
+                    <div class="search-bar">
+                        <label for="Search">
+                            <input
+                                    type="text"
+                                    placeholder="Search inventory..."
+                                    class="outline-none"
+                                    id="Search"
+                            />
+                        </label>
+                    </div>
+                    <!-- Button for adding new stock -->
+                    <button
+                            id="stockstick-add-btn"
+                            type="button"
+                            class="action-button bg-indigo-600 text-white hover:bg-indigo-700"
+                            onclick="location.href='/app/Addnew'"
+                    >
+                        Add New Stock
+                    </button>
+                </div>
+            </div>
+
+            <table class="min-w-full">
+                <thead>
+                <tr class="bg-gray-50">
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Item Name
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Description
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Status
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Quantity
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Last Update
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Category
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Price
+                    </th>
+                    <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody
+                        class="divide-y divide-gray-200"
+                        th:each="Items : ${ItemsList}"
+                >
+                <!-- Sample row - will be populated dynamically -->
+                <tr class="hover:bg-gray-50">
+                    <td
+                            class="px-6 py-4 whitespace-nowrap"
+                            th:text="${Items.item_name}"
+                    ></td>
+                    <td
+                            class="px-6 py-4 whitespace-nowrap"
+                            th:text="${Items.item_description}"
+                    ></td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                          th:id="'stockstick-status-' + ${Items.item_id}"
+                          class="stockstick-status"
+                          th:text="${Items.status}"
+                  >
+                  </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="quantity-control">
+                            <button
+                                    class="qty-btn"
+                                    th:onclick="|updateQuantity(${Items.item_id}, -1)|"
+                            >
+                                -
+                            </button>
+                            <label for="quantity"></label>
+                            <input
+                                    type="number"
+                                    id="quantity"
+                                    name="quantity"
+                                    th:value="${Items.quantity}"
+                                    class="w-20 text-center border rounded text bold"
+                                    th:attr="data-item-id=${Items.item_id}"
+                                    th:onchange="|handleQuantityChange(${Items.item_id}, this.value)|"
+                                    title="Enter the quantity"
+                            />
+                            <button
+                                    class="qty-btn"
+                                    th:onclick="|updateQuantity(${Items.item_id}, 1)|"
+                            >
+                                +
+                            </button>
+                        </div>
+                    </td>
+
+                    <td
+                            class="px-6 py-4 whitespace-nowrap"
+                            th:text="${Items.item_lastUpdate}"
+                    ></td>
+                    <td
+                            class="px-6 py-4 whitespace-nowrap"
+                            th:text="${Items.item_categories}"
+                    ></td>
+                    <td
+                            class="px-6 py-4 whitespace-nowrap"
+                            th:text="${Items.item_price}"
+                    ></td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a
+                                th:href="@{/app/UpdateItem/{id}(id=${Items.item_id})}"
+                                class="text-indigo-600 hover:text-blue-800 mr-3"
+                        >Edit</a
+                        >
+                        <a
+                                href="#"
+                                class="text-red-600 hover:text-red-900 mr-3"
+                                th:onclick="|deleteItem(${Items.item_id})|"
+                        >Delete</a
+                        >
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/static/javascript/Inventory.js"></script>
+</body>
+</html>
