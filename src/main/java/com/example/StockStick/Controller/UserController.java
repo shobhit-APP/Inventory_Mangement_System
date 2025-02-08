@@ -1,7 +1,7 @@
 package com.example.StockStick.Controller;
+
 import com.example.StockStick.AllException.CustomException;
 import com.example.StockStick.Model.*;
-import com.example.StockStick.Service.CustomizationService;
 import com.example.StockStick.Service.ItemsService;
 import com.example.StockStick.Service.UserPlanService;
 import com.example.StockStick.Service.UserService;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
@@ -19,12 +18,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +29,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/app")
 public class UserController {
-    @Autowired
-    private CustomizationService service;
     @Autowired
     private UserPlanService userPlanService;
     @Autowired
@@ -304,14 +298,6 @@ public ResponseEntity<Map<String, String>> updateUserAndItems(@AuthenticationPri
                 throw new CustomException("Sorry, we could not find your user plan data in the database. Without user plans, deletion is not possible. Please verify your account.");
             }
             userPlanService.deleteAllUserPlanBySameUserId(Id);
-
-            List<Custom_or_UserPreferences> customOrUserPreferences = service.getSaveUserPreferences(emailAddress);
-            if (customOrUserPreferences.isEmpty()) {
-                log.error("User preferences are empty");
-                throw new CustomException("Sorry, we could not find your user preferences in the database. Without preferences, deletion is not possible. Please verify your account.");
-            }
-            service.deleteByUserDetails_EmailAddress(emailAddress);
-
             userDetails = userService.FindByEmailAddress(emailAddress);
             if (userDetails == null) {
                 log.error("User details are empty");
