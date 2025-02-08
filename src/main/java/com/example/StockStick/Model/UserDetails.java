@@ -61,9 +61,7 @@ public class UserDetails {
     //one user can have many plans
     @ToString.Exclude
     private List<UserPlanData> userPlanData;
-    @ToString.Exclude
-    @OneToMany(mappedBy = "userDetails" ,cascade = CascadeType.ALL)
-    private List<Custom_or_UserPreferences> customOrUserPreferences;
+  
 
 
 }
