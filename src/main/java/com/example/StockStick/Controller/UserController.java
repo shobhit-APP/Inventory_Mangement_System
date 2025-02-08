@@ -294,29 +294,32 @@ public ResponseEntity<Map<String, String>> updateUserAndItems(@AuthenticationPri
             }
             List<Items> items = ItemService.getSaveProduct(userId);
             if (items.isEmpty()) {
-                log.error("Items Is Null");
-                throw new CustomException("Sorry, we could not find your details in the database. It seems you do not have an account on this website.");
+                log.error("Items are empty");
+                throw new CustomException("Sorry, we could not find your items in the database. Without items, deletion is not possible. Please verify your account.");
             }
             ItemService.deleteAllItemById(userId);
+
             List<UserPlanData> userPlanData = userPlanService.GetAllUserPlanDataByUserId(Id);
             if (userPlanData.isEmpty()) {
-                log.error("UserPlanData Is Is Null");
-                throw new CustomException("Sorry, we could not find your details in the database. It seems you do not have an account on this website.");
+                log.error("User plan data is empty");
+                throw new CustomException("Sorry, we could not find your user plan data in the database. Without user plans, deletion is not possible. Please verify your account.");
             }
             userPlanService.deleteAllUserPlanBySameUserId(Id);
 
             List<Custom_or_UserPreferences> customOrUserPreferences = service.getSaveUserPreferences(emailAddress);
-            if (userPlanData.isEmpty()) {
-                log.error("Preferences Is Null");
-                throw new CustomException("Sorry, we could not find your details in the database. It seems you do not have an account on this website.");
+            if (customOrUserPreferences.isEmpty()) {
+                log.error("User preferences are empty");
+                throw new CustomException("Sorry, we could not find your user preferences in the database. Without preferences, deletion is not possible. Please verify your account.");
             }
             service.deleteByUserDetails_EmailAddress(emailAddress);
+
             userDetails = userService.FindByEmailAddress(emailAddress);
             if (userDetails == null) {
-                log.error("User Is Null");
-                response.put("message","Sorry, we could not find your details in the database. It seems you do not have an account on this website.");
-                return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
-            } else {
+                log.error("User details are empty");
+                response.put("message", "Sorry, we could not find your user details in the database. Without user details, deletion is not possible. Please verify your account.");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+            else {
                 userService.deleteUserByEmailAddress(emailAddress);
                 response.put("message","Your Account Is Permanently deleted.");
                 return new ResponseEntity<>(response, HttpStatus.OK);
