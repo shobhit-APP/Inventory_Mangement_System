@@ -1,12 +1,10 @@
 package com.example.StockStick.Controller;
 
 import com.example.StockStick.AllException.CustomException;
-import com.example.StockStick.Model.Custom_or_UserPreferences;
 import com.example.StockStick.Model.Items;
 import com.example.StockStick.Model.UserDetails;
 import com.example.StockStick.Model.UserPrinciple;
 import com.example.StockStick.Repositery.UserRepo;
-import com.example.StockStick.Service.CustomizationService;
 import com.example.StockStick.Service.ItemsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +29,6 @@ public class ItemsController {
     private ItemsService itemsService;
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    private CustomizationService service;
     @GetMapping("/Addnew")
     public String AddProduct()
     {
@@ -184,7 +180,6 @@ public class ItemsController {
              String Categories=items.getItem_categories();
              double TotalPrice=itemsService.getTotalQuantityOfAnyItem(ItemsList , userPrinciple.getUserId());
              double TotalCategories=itemsService.getTotalQuantityOfAnyItem(ItemsList , userPrinciple.getUserId(), Categories);
-             List<Custom_or_UserPreferences> customOrUserPreferences = service.getSaveUserPreferences(emailAddress);
         if (ItemsList.isEmpty() && LocalDate.now().equals(userPrinciple.getRDate())) {
             model.addAttribute("greet" ,"Welcome");
             model.addAttribute("Status", "Your inventory is currently empty. Please add some stock and personalize your inventory if you wish!");
@@ -208,7 +203,6 @@ public class ItemsController {
         model.addAttribute("country", userDetails.getCountry());
         model.addAttribute("state", userDetails.getState());
         model.addAttribute("UserType", userDetails.getUsertype());
-        model.addAttribute("customOrUserPreferences", customOrUserPreferences);
         return "Inventory";
     }
     @DeleteMapping("/DeleteItem/{item_id}")
